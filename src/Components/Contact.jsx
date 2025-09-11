@@ -53,42 +53,6 @@ export default function Contact() {
           Send Message 🚀
         </motion.button>
       </motion.form>
-
-      {/* Social Links */}
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.6 }}
-        className="flex gap-8 mt-12"
-      >
-        <a
-          href="mailto:your.email@example.com"
-          className="text-white text-2xl hover:text-purple-400 transition"
-        >
-          📧
-        </a>
-        <a
-          href="https://www.instagram.com/yourhandle"
-          target="_blank"
-          className="text-white text-2xl hover:text-purple-400 transition"
-        >
-          📸
-        </a>
-        <a
-          href="https://www.linkedin.com/in/yourhandle"
-          target="_blank"
-          className="text-white text-2xl hover:text-purple-400 transition"
-        >
-          💼
-        </a>
-        <a
-          href="https://www.youtube.com/@yourhandle"
-          target="_blank"
-          className="text-white text-2xl hover:text-purple-400 transition"
-        >
-          ▶️
-        </a>
-      </motion.div>
     </section>
   );
 }

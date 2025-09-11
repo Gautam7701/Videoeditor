@@ -1,84 +1,101 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
 
 export default function Hero() {
-  const [offset, setOffset] = useState({ x: 0, y: 0 });
+  // Variants for staggering children
+  const container = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.3,
+      },
+    },
+  };
 
-  // Mouse parallax effect
-  const handleMouseMove = (e) => {
-    const { innerWidth, innerHeight } = window;
-    const x = (e.clientX / innerWidth - 0.5) * 20; // subtle range
-    const y = (e.clientY / innerHeight - 0.5) * 20;
-    setOffset({ x, y });
+  const fadeUp = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
   };
 
   return (
     <section
-      onMouseMove={handleMouseMove}
-      className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-black"
+      className="relative h-screen w-full flex flex-col items-center justify-center text-center"
     >
-      {/* Animated background blobs */}
-      <div className="absolute -top-60 -left-60 w-[600px] h-[600px] bg-purple-600 rounded-full mix-blend-screen filter blur-3xl opacity-40 animate-[blob_7s_ease-in-out_infinite]"></div>
-      <div className="absolute top-40 -right-40 w-[450px] h-[450px] bg-pink-600 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-[blob_10s_ease-in-out_infinite]"></div>
+      {/* Background image with low opacity */}
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage: "url('/heroimage.jpg')",
+          opacity: 0.7, // adjust opacity here
+        }}
+      ></div>
 
-      {/* Subtle light streaks */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute w-[2px] h-full bg-white/5 animate-[streak_8s_linear_infinite]"></div>
-        <div className="absolute w-[2px] h-full bg-white/5 left-1/4 animate-[streak_10s_linear_infinite]"></div>
-      </div>
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/50"></div>
 
-      {/* Main content */}
+      {/* Main content with staggered animation */}
       <motion.div
-        style={{ transform: `translate(${offset.x}px, ${offset.y}px)` }}
-        className="relative z-10 text-center px-6 transition-transform duration-150"
+        className="relative z-10 px-6 flex flex-col items-center"
+        variants={container}
+        initial="hidden"
+        animate="visible"
       >
         <motion.h1
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-          className="text-5xl md:text-8xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-500 to-purple-400 drop-shadow-[0_0_20px_rgba(168,85,247,0.8)]"
+          className="text-5xl md:text-7xl font-bold text-white drop-shadow-lg"
+          variants={fadeUp}
         >
-          LAKSHAY MAHESWARI
+          LAKSHAY MAHESHWARI
         </motion.h1>
 
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.4 }}
-          className="mt-4 text-2xl md:text-3xl text-gray-200 tracking-wider"
+          className="mt-4 text-2xl md:text-3xl text-gray-200"
+          variants={fadeUp}
         >
-          Cinematic Video Editor 🎬 | Storytelling in Motion
+          Creative Cinematic Editor | Crafting Stories Through Motion
         </motion.p>
 
-        <motion.button
-  whileHover={{
-    scale: 1.1,
-    boxShadow: "0 0 25px rgba(168,85,247,0.9)",
-  }}
-  onClick={() => 
-    document.getElementById("showreel")?.scrollIntoView({ behavior: "smooth" })
-  }
-  className="mt-8 px-8 py-4 rounded-2xl bg-gradient-to-r from-purple-600 via-pink-500 to-purple-700 text-white font-bold text-lg shadow-lg hover:scale-105 transition-all"
->
-  Watch My Work
-</motion.button>
+        <motion.p
+          className="mt-2 text-lg md:text-xl text-gray-300 max-w-xl mx-auto"
+          variants={fadeUp}
+        >
+          Transforming visions into visually stunning narratives. Specializing in cinematic video editing, storytelling, and motion graphics.
+        </motion.p>
 
+        {/* Buttons */}
+        <motion.div
+          className="mt-8 flex flex-col md:flex-row gap-4 justify-center"
+          variants={fadeUp}
+        >
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            onClick={() =>
+              document.getElementById("showreel")?.scrollIntoView({ behavior: "smooth" })
+            }
+            className="px-8 py-4 rounded-2xl bg-purple-600 text-white font-bold text-lg shadow-lg hover:bg-purple-700 transition-all"
+          >
+            Watch My Work
+          </motion.button>
+
+          <motion.a
+            whileHover={{ scale: 1.05 }}
+            href="#contact"
+            className="px-8 py-4 rounded-2xl bg-white text-purple-700 font-bold text-lg shadow-lg hover:bg-gray-200 transition-all"
+          >
+            Contact Me
+          </motion.a>
+        </motion.div>
       </motion.div>
 
-      {/* Circular scroll down indicator */}
+      {/* Scroll indicator */}
       <div
         onClick={() =>
           document.getElementById("showreel")?.scrollIntoView({ behavior: "smooth" })
         }
         className="absolute bottom-8 left-1/2 -translate-x-1/2 w-14 h-14 rounded-full 
-                   border-2 border-purple-500 flex items-center justify-center 
-                   animate-bounce cursor-pointer shadow-lg shadow-purple-700/50
-                   hover:scale-110 transition-transform"
+                   border-2 border-white flex items-center justify-center 
+                   animate-bounce cursor-pointer"
       >
-        <span className="text-white text-xl animate-bounce">⬇️</span>
+        <span className="text-white text-xl">⬇️</span>
       </div>
-
-      {/* Add Tailwind keyframes in your tailwind.config.js for blob and streak animations */}
     </section>
   );
 }

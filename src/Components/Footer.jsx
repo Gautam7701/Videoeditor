@@ -11,7 +11,7 @@ export default function Footer() {
       >
         {/* Brand */}
         <div className="text-white text-xl font-bold drop-shadow-[0_0_10px_rgba(168,85,247,0.8)]">
-          Lakshay Maheswari
+          Lakshay Maheshwari
         </div>
 
         {/* Quick Links */}
